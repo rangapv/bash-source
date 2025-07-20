@@ -66,11 +66,12 @@ then
   mac=""
 else
   mac=$(sw_vers | grep mac)
+  echo "$mac"
   #mac="1"
 fi
 
 
-if [ -z $mac ]
+if [ -z "$mac" ]
 then
   u1=$(cat /etc/*-release | grep ID= | grep ubuntu)
   f1=$(cat /etc/*-release | grep ID= | grep fedora)
@@ -80,13 +81,14 @@ then
   s1=$(cat /etc/*-release | grep ID= | grep sles)
   d1=$(cat /etc/*-release | grep ID= | grep debian)
   fc1=$(cat /etc/*-release | grep ID= | grep flatcar)
+ 
+  irelease=`cat /etc/*-release | grep DISTRIB_RELEASE | awk '{split($0,a,"=");print a[2]}' |  awk '{split($0,a,".");print a[1]a[2]}'`
 else 
   echo "It's a Mac "
   echo "mac is $mac"
 fi
 
 count=0
-irelease=`cat /etc/*-release | grep DISTRIB_RELEASE | awk '{split($0,a,"=");print a[2]}' |  awk '{split($0,a,".");print a[1]a[2]}'`
 if [ ! -z "$u1" ]
 then 
 	ji=$(cat /etc/*-release | grep DISTRIB_ID | awk '{split($0,a,"=");print a[2]}')
